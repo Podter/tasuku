@@ -4,9 +4,19 @@ import { Link } from "expo-router";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { api } from "~/lib/api";
+import { deleteToken } from "~/lib/session-store";
 
 export default function Index() {
+  const utils = api.useUtils();
+
   const { data, refetch } = api.server.random.useQuery();
+  const { data: userData } = api.user.auth.getSession.useQuery();
+  const { mutate } = api.user.auth.logout.useMutation({
+    onSuccess: async () => {
+      await deleteToken();
+      await utils.user.invalidate();
+    },
+  });
 
   return (
     <View className="flex-1 items-center justify-center gap-2 text-center">
@@ -19,6 +29,16 @@ export default function Index() {
           <Text>Auth</Text>
         </Button>
       </Link>
+      {userData?.user && userData?.session && (
+        <>
+          <Text>Hello, {userData.user.username}!</Text>
+          <Text>User ID: {userData.user.id}</Text>
+          <Text>Session ID: {userData.session.id}</Text>
+          <Button onPress={() => mutate()}>
+            <Text>Logout</Text>
+          </Button>
+        </>
+      )}
     </View>
   );
 }
