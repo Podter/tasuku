@@ -1,7 +1,6 @@
 {
   "name": "tasuku-server",
   "main": "server.mjs",
-  "type": "module",
   "dependencies": {
     "@expo/server": "^0.4.4",
     "@hono/node-server": "^1.12.0",
