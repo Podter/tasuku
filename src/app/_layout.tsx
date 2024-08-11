@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 
 import { useColorScheme } from "~/hooks/use-color-scheme";
+import { TRPCProvider } from "~/lib/api";
 import { NAV_THEME } from "~/lib/constants";
 
 const LIGHT_THEME: Theme = {
@@ -54,14 +55,16 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-    </ThemeProvider>
+    <TRPCProvider>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        />
+      </ThemeProvider>
+    </TRPCProvider>
   );
 }
 
