@@ -4,9 +4,11 @@ import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import { db } from "../db";
+
 export function createTRPCContext(opts: FetchCreateContextFnOptions) {
   return {
-    // db,
+    db,
     // session,
     opts,
   };
