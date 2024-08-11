@@ -1,13 +1,14 @@
 import "~/global.css";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Theme, ThemeProvider } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { Platform } from "react-native";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Platform } from "react-native";
-import { NAV_THEME } from "~/lib/constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Theme, ThemeProvider } from "@react-navigation/native";
+
 import { useColorScheme } from "~/hooks/use-color-scheme";
-import { useEffect, useState } from "react";
+import { NAV_THEME } from "~/lib/constants";
 
 const LIGHT_THEME: Theme = {
   dark: false,
