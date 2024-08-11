@@ -1,3 +1,3 @@
 export function GET() {
-  return Response.json({ message: "Hello, world!" });
+  return Response.json({ message: `Random math: ${Math.random()}` });
 }
