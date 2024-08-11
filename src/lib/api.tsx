@@ -7,7 +7,7 @@ import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
 
 import type { AppRouter } from "~/server/api";
-// import { getToken } from "./session-store";
+import { getToken } from "./session-store";
 import { getBaseUrl } from "./utils";
 
 export const api = createTRPCReact<AppRouter>();
@@ -27,8 +27,8 @@ export function TRPCProvider(props: PropsWithChildren) {
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Map<string, string>();
-            // const token = getToken();
-            // if (token) headers.set("Authorization", `Bearer ${token}`);
+            const token = getToken();
+            if (token) headers.set("Authorization", `Bearer ${token}`);
             return Object.fromEntries(headers);
           },
         }),

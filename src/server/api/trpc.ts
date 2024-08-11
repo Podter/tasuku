@@ -1,16 +1,24 @@
-// import { initTRPC, TRPCError } from "@trpc/server";
-import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import type { LuciaSession } from "../auth/session";
+import { validateRequest } from "../auth/session";
 import { db } from "../db";
 
-export function createTRPCContext(opts: FetchCreateContextFnOptions) {
+interface CreateContextOptions {
+  req: Request;
+  session?: LuciaSession | null;
+}
+
+export async function createTRPCContext(opts: CreateContextOptions) {
+  const { req } = opts;
+  const { session, user } = opts.session ?? (await validateRequest(req));
   return {
+    session,
+    user,
     db,
-    // session,
-    opts,
+    req,
   };
 }
 
@@ -29,14 +37,15 @@ export const createTRPCRouter = t.router;
 
 export const publicProcedure = t.procedure;
 
-// export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-//   if (!ctx.session?.user) {
-//     throw new TRPCError({ code: "UNAUTHORIZED" });
-//   }
-//   return next({
-//     ctx: {
-//       // infers the `session` as non-nullable
-//       session: { ...ctx.session, user: ctx.session.user },
-//     },
-//   });
-// });
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.session || !ctx.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` and `user` as non-nullable
+      session: ctx.session,
+      user: ctx.user,
+    },
+  });
+});
