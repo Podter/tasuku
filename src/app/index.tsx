@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import { Link } from "expo-router";
 
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -13,6 +14,11 @@ export default function Index() {
       <Button onPress={() => refetch()}>
         <Text>Get message</Text>
       </Button>
+      <Link href="/auth" asChild>
+        <Button>
+          <Text>Auth</Text>
+        </Button>
+      </Link>
     </View>
   );
 }
