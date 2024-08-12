@@ -22,15 +22,20 @@ export function useSession() {
 
   const { mutateAsync: logoutAsync } = api.user.auth.logout.useMutation();
 
+  const updateSession = useCallback(async () => {
+    await utils.user.auth.getSession.invalidate();
+  }, [utils]);
+
   const logout = useCallback(async () => {
     await logoutAsync();
     await deleteToken();
-    await utils.user.auth.getSession.invalidate();
-  }, [logoutAsync, utils]);
+    await updateSession();
+  }, [logoutAsync, updateSession]);
 
   return {
     userData,
     isLoading,
+    updateSession,
     logout,
   };
 }

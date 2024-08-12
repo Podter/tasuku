@@ -13,16 +13,19 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
+import { useSession } from "~/hooks/use-session";
 import { api } from "~/lib/api";
 import { setToken } from "~/lib/session-store";
 import { LoginSchema } from "~/validators/auth";
 
 export default function Login() {
   const router = useRouter();
+  const { updateSession } = useSession();
 
   const { mutate, isPending } = api.user.auth.login.useMutation({
     onSuccess: async ({ sessionId }) => {
       await setToken(sessionId);
+      await updateSession();
       router.replace("/");
     },
     onError: (error) => {
