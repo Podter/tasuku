@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import Toast from "react-native-toast-message";
+import { Link } from "expo-router";
 
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -8,8 +8,15 @@ import { api } from "~/lib/api";
 
 export default function Index() {
   const { logout, userData } = useSession();
+  const utils = api.useUtils();
 
-  const { data, refetch } = api.server.random.useQuery();
+  const { data, isFetching } = api.list.getMany.useQuery();
+
+  const { mutate } = api.list.create.useMutation({
+    onSuccess: () => {
+      utils.list.getMany.invalidate();
+    },
+  });
 
   if (!userData) {
     return null;
@@ -17,26 +24,46 @@ export default function Index() {
 
   return (
     <View className="flex-1 items-center justify-center gap-2 text-center">
-      {data?.message ? <Text>{data.message}</Text> : <Text>Loading...</Text>}
-      <Button onPress={() => refetch()}>
-        <Text>Get message</Text>
-      </Button>
+      {isFetching || !data ? (
+        <Text>Loading lists...</Text>
+      ) : (
+        <View className="gap-1">
+          {data.map(({ id }) => (
+            <List id={id} key={id} />
+          ))}
+        </View>
+      )}
       <Button
-        onPress={() =>
-          Toast.show({
-            text1: "Hello, world!",
-            text2: "This is a toast message",
-          })
-        }
+        onPress={() => mutate({ name: Math.random().toString() })}
+        variant="secondary"
       >
-        <Text>Show toast</Text>
+        <Text>Create List</Text>
       </Button>
-      <Text>Hello, {userData.user.username}!</Text>
-      <Text>User ID: {userData.user.id}</Text>
-      <Text>Session ID: {userData.session.id}</Text>
-      <Button onPress={() => logout()}>
-        <Text>Logout</Text>
+      <Button onPress={() => logout()} variant="secondary">
+        <Text>{userData.user.username} | Logout</Text>
       </Button>
     </View>
+  );
+}
+
+function List({ id }: { id: string }) {
+  const { data, isFetching } = api.list.get.useQuery({ id });
+
+  if (isFetching || !data) {
+    return <Text>Loading list name...</Text>;
+  }
+
+  return (
+    <Link
+      asChild
+      href={{
+        pathname: "/(app)/[list]",
+        params: { list: id },
+      }}
+    >
+      <Button>
+        <Text>{data.name}</Text>
+      </Button>
+    </Link>
   );
 }
