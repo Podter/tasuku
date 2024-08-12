@@ -4,6 +4,7 @@ import { Drawer } from "expo-router/drawer";
 
 import DrawerHeader from "~/components/drawer-header";
 import { useSession } from "~/hooks/use-session";
+import { NAV_THEME } from "~/lib/constants";
 
 export default function AuthLayout() {
   const { isLoading, userData } = useSession();
@@ -19,9 +20,14 @@ export default function AuthLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* Style drawer */}
       <Drawer
         screenOptions={{
           header: (props) => <DrawerHeader {...props} />,
+          drawerStyle: {
+            borderRightWidth: 1,
+            borderColor: NAV_THEME.dark.border,
+          },
         }}
       >
         <Drawer.Screen
