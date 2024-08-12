@@ -5,6 +5,7 @@ import { Platform } from "react-native";
 import Constants from "expo-constants";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 
@@ -36,12 +37,16 @@ export default function RootLayout() {
       }
       if (!theme) {
         setAndroidNavigationBar(colorScheme);
+        await SystemUI.setBackgroundColorAsync(
+          NAV_THEME[colorScheme].background,
+        );
         AsyncStorage.setItem("theme", colorScheme);
         setIsColorSchemeLoaded(true);
         return;
       }
       const colorTheme = theme === "dark" ? "dark" : "light";
       setAndroidNavigationBar(colorScheme);
+      await SystemUI.setBackgroundColorAsync(NAV_THEME[colorScheme].background);
       if (colorTheme !== colorScheme) {
         setColorScheme(colorTheme);
         setIsColorSchemeLoaded(true);
