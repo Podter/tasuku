@@ -13,8 +13,8 @@ export default function Login() {
   const router = useRouter();
 
   const { mutate, isPending } = api.user.auth.login.useMutation({
-    onSuccess: ({ sessionId }) => {
-      setToken(sessionId);
+    onSuccess: async ({ sessionId }) => {
+      await setToken(sessionId);
       router.replace("/");
     },
   });
