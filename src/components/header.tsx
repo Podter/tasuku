@@ -9,6 +9,7 @@ interface HeaderProps extends NativeStackHeaderProps {
   border?: boolean;
 }
 
+// TODO: make header as a reusable component
 export default function Header({
   back,
   options,

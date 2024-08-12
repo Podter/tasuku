@@ -1,5 +1,8 @@
-import { Redirect, Slot } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Redirect } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 
+import DrawerHeader from "~/components/drawer-header";
 import { useSession } from "~/hooks/use-session";
 
 export default function AuthLayout() {
@@ -14,5 +17,20 @@ export default function AuthLayout() {
     return <Redirect href="/login" />;
   }
 
-  return <Slot />;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer
+        screenOptions={{
+          header: (props) => <DrawerHeader {...props} />,
+        }}
+      >
+        <Drawer.Screen
+          name="index"
+          options={{
+            title: "Tasuku",
+          }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
+  );
 }
