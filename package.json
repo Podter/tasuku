@@ -15,7 +15,8 @@
     "lint": "expo lint",
     "format": "prettier --write .",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@expo/server": "^0.4.4",

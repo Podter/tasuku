@@ -3,5 +3,22 @@ services:
     build:
       context: .
     restart: unless-stopped
+    environment:
+      POSTGRES_URL: postgres://tasuku:tasuku@postgres:5432/tasuku
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tasuku
+      POSTGRES_PASSWORD: tasuku
+      POSTGRES_DB: tasuku
+    volumes:
+      - tasuku-data:/var/lib/postgresql/data
+
+volumes:
+  tasuku-data:

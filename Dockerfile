@@ -12,8 +12,9 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 COPY . .
-RUN pnpm tailwindcss -i src/global.css -o node_modules/.cache/nativewind/global.css.web.css
-RUN pnpm run build
+RUN pnpm tailwindcss -i src/global.css -o node_modules/.cache/nativewind/global.css.web.css \
+    && pnpm run build \
+    && pnpm run db:generate
 
 # Build server
 FROM builder AS server-build
