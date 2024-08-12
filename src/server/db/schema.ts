@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 // User
 export const User = pgTable("user", {
@@ -37,6 +43,10 @@ export const ListRelations = relations(List, ({ many }) => ({
 export const Task = pgTable("task", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  done: boolean("done").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => User.id),
 });
 
 export const TaskRelations = relations(Task, ({ many }) => ({
