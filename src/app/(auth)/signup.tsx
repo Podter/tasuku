@@ -3,6 +3,7 @@ import { Link, useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
+import Back from "~/components/back";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -32,6 +33,7 @@ export default function SignUp() {
 
   return (
     <View className="flex-1 items-center justify-center">
+      <Back className="absolute left-2 top-2 hidden sm:flex" />
       <View className="h-full w-full flex-1 flex-col justify-between p-4 sm:max-h-[478px] sm:max-w-md sm:justify-center sm:rounded-3xl sm:border sm:border-border sm:p-6">
         <View className="gap-6">
           <View className="items-center gap-2 text-center">
