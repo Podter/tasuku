@@ -1,3 +1,5 @@
+// TODO: implement keyboard avoiding view
+
 import { View } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
