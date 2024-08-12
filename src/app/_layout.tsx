@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 
 import { useColorScheme } from "~/hooks/use-color-scheme";
+import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import { TRPCProvider } from "~/lib/api";
 import { NAV_THEME } from "~/lib/constants";
 
@@ -33,11 +34,13 @@ export default function RootLayout() {
         document.documentElement.classList.add("bg-background");
       }
       if (!theme) {
+        setAndroidNavigationBar(colorScheme);
         AsyncStorage.setItem("theme", colorScheme);
         setIsColorSchemeLoaded(true);
         return;
       }
       const colorTheme = theme === "dark" ? "dark" : "light";
+      setAndroidNavigationBar(colorScheme);
       if (colorTheme !== colorScheme) {
         setColorScheme(colorTheme);
         setIsColorSchemeLoaded(true);

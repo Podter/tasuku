@@ -68,6 +68,9 @@ importers:
       expo-linking:
         specifier: ~6.3.1
         version: 6.3.1(expo@51.0.26(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
+      expo-navigation-bar:
+        specifier: ~3.0.7
+        version: 3.0.7(expo@51.0.26(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
       expo-router:
         specifier: ~3.5.21
         version: 3.5.21(o7vq5luquqpd3h2m7nw7jfqjvu)
@@ -3074,6 +3077,11 @@ packages:
 
   expo-modules-core@1.12.20:
     resolution: {integrity: sha512-CCXjlgT8lDAufgt912P1W7TwD+KAylfIttc1Doh1a0hAfkdkUsDRmrgthnYrrxEo2ECVpbaB71Epp1bnZ1rRrA==}
+
+  expo-navigation-bar@3.0.7:
+    resolution: {integrity: sha512-KCNHyZ58zoN4xdy7D1lUdJvveCYNVQHGSX4M6xO/SZypvI6GZbLzKSN6Lx4GDGEFxG6Kb+EAckZl48tSiNeGYQ==}
+    peerDependencies:
+      expo: '*'
 
   expo-router@3.5.21:
     resolution: {integrity: sha512-0rqt1ViwZ+a+obODGX1e7krRlRwhxwTHdMdhfpWU9rCLm9B4sr5k77LBAd8V7MRS7FGGZBA93CgYxKfpO/arng==}
@@ -9315,6 +9323,14 @@ snapshots:
   expo-modules-core@1.12.20:
     dependencies:
       invariant: 2.2.4
+
+  expo-navigation-bar@3.0.7(expo@51.0.26(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))):
+    dependencies:
+      '@react-native/normalize-colors': 0.74.85
+      debug: 4.3.6
+      expo: 51.0.26(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))
+    transitivePeerDependencies:
+      - supports-color
 
   expo-router@3.5.21(o7vq5luquqpd3h2m7nw7jfqjvu):
     dependencies:
