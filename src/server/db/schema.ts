@@ -24,7 +24,9 @@ export const Session = pgTable("session", {
 export const List = pgTable("list", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
-  userId: text("user_id").references(() => User.id),
+  userId: text("user_id")
+    .notNull()
+    .references(() => User.id),
 });
 
 export const ListRelations = relations(List, ({ many }) => ({
