@@ -16,7 +16,7 @@ export default function DrawerHeader({
         <Button
           variant="ghost"
           size="icon"
-          onPress={() => navigation.openDrawer()}
+          onPress={() => navigation.toggleDrawer()}
         >
           <Menu className="text-foreground" size={24} />
         </Button>

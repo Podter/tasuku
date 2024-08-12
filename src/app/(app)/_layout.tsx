@@ -28,6 +28,7 @@ export default function AuthLayout() {
           name="index"
           options={{
             title: "Tasuku",
+            drawerLabel: "Home",
           }}
         />
       </Drawer>
