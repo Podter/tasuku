@@ -10,6 +10,11 @@ interface BackProps {
 
 export default function Back({ className, onPress }: BackProps) {
   const router = useRouter();
+
+  if (!router.canGoBack()) {
+    return null;
+  }
+
   return (
     <Button
       variant="ghost"
