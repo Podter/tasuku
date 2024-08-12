@@ -9,7 +9,12 @@ interface HeaderProps extends NativeStackHeaderProps {
   border?: boolean;
 }
 
-export default function Header({ back, options, border = true }: HeaderProps) {
+export default function Header({
+  back,
+  options,
+  navigation,
+  border = true,
+}: HeaderProps) {
   return (
     <View
       className={cn(
@@ -18,7 +23,7 @@ export default function Header({ back, options, border = true }: HeaderProps) {
       )}
     >
       <View className="flex-row items-center gap-2">
-        {back && <Back />}
+        {back && <Back onPress={() => navigation.goBack()} />}
         {options.title && (
           <Text className="text-xl font-semibold">{options.title}</Text>
         )}

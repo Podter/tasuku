@@ -5,16 +5,17 @@ import { Button } from "./ui/button";
 
 interface BackProps {
   className?: string;
+  onPress?: () => void;
 }
 
-export default function Back({ className }: BackProps) {
+export default function Back({ className, onPress }: BackProps) {
   const router = useRouter();
   return (
     <Button
       variant="ghost"
       size="icon"
       className={className}
-      onPress={() => router.back()}
+      onPress={onPress ? onPress : () => router.back()}
     >
       <ArrowLeft className="text-foreground" size={24} />
     </Button>
