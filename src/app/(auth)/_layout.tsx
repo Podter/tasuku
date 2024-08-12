@@ -1,10 +1,22 @@
 import { useWindowDimensions } from "react-native";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 
 import Header from "~/components/header";
+import { useSession } from "~/hooks/use-session";
 
 export default function AuthLayout() {
   const { width } = useWindowDimensions();
+
+  const { isLoading, userData } = useSession();
+
+  if (isLoading) {
+    // TODO: add loading screen
+    return null;
+  }
+
+  if (userData) {
+    return <Redirect href="/" />;
+  }
 
   return (
     <Stack
