@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import Toast from "react-native-toast-message";
 import { Link } from "expo-router";
 
 import { Button } from "~/components/ui/button";
@@ -24,7 +25,16 @@ export default function Index() {
       <Button onPress={() => refetch()}>
         <Text>Get message</Text>
       </Button>
-
+      <Button
+        onPress={() =>
+          Toast.show({
+            text1: "Hello, world!",
+            text2: "This is a toast message",
+          })
+        }
+      >
+        <Text>Show toast</Text>
+      </Button>
       {userData?.user && userData?.session ? (
         <>
           <Text>Hello, {userData.user.username}!</Text>
