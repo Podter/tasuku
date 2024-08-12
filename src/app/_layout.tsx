@@ -2,6 +2,7 @@ import "~/global.css";
 
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
+import Constants from "expo-constants";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -64,6 +65,12 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             headerShown: false,
+            contentStyle: {
+              backgroundColor: isDarkColorScheme
+                ? DARK_THEME.colors.background
+                : LIGHT_THEME.colors.background,
+              paddingTop: Constants.statusBarHeight,
+            },
           }}
         >
           <Stack.Screen
