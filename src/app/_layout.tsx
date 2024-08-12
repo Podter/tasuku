@@ -65,7 +65,15 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
           }}
-        />
+        >
+          <Stack.Screen
+            name="(auth)"
+            options={{
+              animation: "slide_from_bottom",
+              gestureDirection: "vertical",
+            }}
+          />
+        </Stack>
       </ThemeProvider>
     </TRPCProvider>
   );

@@ -24,12 +24,8 @@ export default function Index() {
       <Button onPress={() => refetch()}>
         <Text>Get message</Text>
       </Button>
-      <Link href="/auth" asChild>
-        <Button>
-          <Text>Auth</Text>
-        </Button>
-      </Link>
-      {userData?.user && userData?.session && (
+
+      {userData?.user && userData?.session ? (
         <>
           <Text>Hello, {userData.user.username}!</Text>
           <Text>User ID: {userData.user.id}</Text>
@@ -38,6 +34,19 @@ export default function Index() {
             <Text>Logout</Text>
           </Button>
         </>
+      ) : (
+        <View className="flex-row gap-2">
+          <Link href="/login" asChild>
+            <Button className="w-28">
+              <Text>Login</Text>
+            </Button>
+          </Link>
+          <Link href="/signup" asChild>
+            <Button className="w-28">
+              <Text>Sign up</Text>
+            </Button>
+          </Link>
+        </View>
       )}
     </View>
   );

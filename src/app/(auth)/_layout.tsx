@@ -1,12 +1,29 @@
-import { View } from "react-native";
-import { Slot } from "expo-router";
+import { useWindowDimensions } from "react-native";
+import { Stack } from "expo-router";
 
 export default function AuthLayout() {
+  const { width } = useWindowDimensions();
+
   return (
-    <View className="flex-1 items-center justify-center">
-      <View className="w-full gap-3 px-12">
-        <Slot />
-      </View>
-    </View>
+    <Stack
+      screenOptions={{
+        headerShown: width >= 640 ? false : true,
+      }}
+    >
+      <Stack.Screen
+        name="login"
+        options={{
+          headerTitle: "",
+          animation: "fade",
+        }}
+      />
+      <Stack.Screen
+        name="signup"
+        options={{
+          headerTitle: "",
+          animation: "fade",
+        }}
+      />
+    </Stack>
   );
 }
