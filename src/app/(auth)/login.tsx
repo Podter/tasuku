@@ -1,6 +1,9 @@
 // TODO: implement keyboard avoiding view
-
+import type { FieldErrors } from "react-hook-form";
+import type { z } from "zod";
+import { useCallback } from "react";
 import { View } from "react-native";
+import Toast from "react-native-toast-message";
 import { Link, useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -22,6 +25,16 @@ export default function Login() {
       await setToken(sessionId);
       router.replace("/");
     },
+    onError: (error) => {
+      Toast.show({
+        type: "error",
+        text1: "Unable to login",
+        text2:
+          error.data?.code === "BAD_REQUEST"
+            ? "Invalid username or password"
+            : "Something went wrong. Please try again later.",
+      });
+    },
   });
 
   const { control, handleSubmit } = useForm({
@@ -31,6 +44,25 @@ export default function Login() {
       password: "",
     },
   });
+
+  const onInvalid = useCallback(
+    ({ username, password }: FieldErrors<z.infer<typeof LoginSchema>>) => {
+      if (username) {
+        Toast.show({
+          type: "error",
+          text1: "Username is invalid",
+          text2: username.message?.toString(),
+        });
+      } else if (password) {
+        Toast.show({
+          type: "error",
+          text1: "Password is invalid",
+          text2: password.message?.toString(),
+        });
+      }
+    },
+    [],
+  );
 
   return (
     <View className="relative flex-1 items-center justify-center">
@@ -92,7 +124,7 @@ export default function Login() {
         <View className="mt-6 gap-4">
           <Button
             className="w-full"
-            onPress={handleSubmit((data) => mutate(data))}
+            onPress={handleSubmit((data) => mutate(data), onInvalid)}
             disabled={isPending}
           >
             <Text>Login</Text>
