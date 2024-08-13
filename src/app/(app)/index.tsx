@@ -57,8 +57,8 @@ function List({ id }: { id: string }) {
     <Link
       asChild
       href={{
-        pathname: "/(app)/[list]",
-        params: { list: id },
+        pathname: "/(app)/list/[id]",
+        params: { id },
       }}
     >
       <Button>
