@@ -6,7 +6,7 @@ import DrawerHeader from "~/components/drawer-header";
 import { useSession } from "~/hooks/use-session";
 import { NAV_THEME } from "~/lib/constants";
 
-export default function AuthLayout() {
+export default function AppLayout() {
   const { isLoading, userData } = useSession();
 
   if (isLoading) {
