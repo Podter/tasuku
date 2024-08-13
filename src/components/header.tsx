@@ -1,19 +1,20 @@
-import type { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { View } from "react-native";
 
 import { cn } from "~/lib/utils";
-import Back from "./back";
 import { Text } from "./ui/text";
 
-interface HeaderProps extends NativeStackHeaderProps {
+interface HeaderProps {
+  title?: string;
+  left?: React.FC;
+  right?: React.FC;
   border?: boolean;
 }
 
 // TODO: make header as a reusable component
 export default function Header({
-  back,
-  options,
-  navigation,
+  title,
+  left: Left,
+  right: Right,
   border = true,
 }: HeaderProps) {
   return (
@@ -24,12 +25,10 @@ export default function Header({
       )}
     >
       <View className="flex-row items-center gap-2">
-        {back && <Back onPress={() => navigation.goBack()} />}
-        {options.title && (
-          <Text className="text-xl font-semibold">{options.title}</Text>
-        )}
+        {Left && <Left />}
+        {title && <Text className="text-xl font-semibold">{title}</Text>}
       </View>
-      <View></View>
+      <View className="flex-row items-center">{Right && <Right />}</View>
     </View>
   );
 }

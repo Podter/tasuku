@@ -1,6 +1,7 @@
 import { useWindowDimensions } from "react-native";
 import { Redirect, Stack } from "expo-router";
 
+import Back from "~/components/back";
 import Header from "~/components/header";
 import { useSession } from "~/hooks/use-session";
 
@@ -22,8 +23,12 @@ export default function AuthLayout() {
     <Stack
       screenOptions={{
         headerShown: width >= 640 ? false : true,
-        // @ts-expect-error - type is not correct
-        header: (props) => <Header {...props} border={false} />,
+        header: ({ navigation }) => (
+          <Header
+            left={() => <Back onPress={() => navigation.goBack()} />}
+            border={false}
+          />
+        ),
       }}
     >
       <Stack.Screen
