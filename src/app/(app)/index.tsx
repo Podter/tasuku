@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { Link } from "expo-router";
 
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -9,8 +8,6 @@ import { api } from "~/lib/api";
 export default function Index() {
   const { logout, userData } = useSession();
   const utils = api.useUtils();
-
-  const { data, isFetching } = api.list.getMany.useQuery();
 
   const { mutate } = api.list.create.useMutation({
     onSuccess: () => {
@@ -24,15 +21,6 @@ export default function Index() {
 
   return (
     <View className="flex-1 items-center justify-center gap-2 text-center">
-      {isFetching || !data ? (
-        <Text>Loading lists...</Text>
-      ) : (
-        <View className="gap-1">
-          {data.map(({ id }) => (
-            <List id={id} key={id} />
-          ))}
-        </View>
-      )}
       <Button
         onPress={() => mutate({ name: Math.random().toString() })}
         variant="secondary"
@@ -43,27 +31,5 @@ export default function Index() {
         <Text>{userData.user.username} | Logout</Text>
       </Button>
     </View>
-  );
-}
-
-function List({ id }: { id: string }) {
-  const { data, isFetching } = api.list.get.useQuery({ id });
-
-  if (isFetching || !data) {
-    return <Text>Loading list name...</Text>;
-  }
-
-  return (
-    <Link
-      asChild
-      href={{
-        pathname: "/(app)/list/[id]",
-        params: { id },
-      }}
-    >
-      <Button>
-        <Text>{data.name}</Text>
-      </Button>
-    </Link>
   );
 }

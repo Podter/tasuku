@@ -6,9 +6,9 @@ import { Drawer } from "expo-router/drawer";
 
 import Header from "~/components/header";
 import { Menu } from "~/components/icons/menu";
+import Sidebar from "~/components/sidebar";
 import { Button } from "~/components/ui/button";
 import { useSession } from "~/hooks/use-session";
-import { NAV_THEME } from "~/lib/constants";
 
 export default function AppLayout() {
   const { width } = useWindowDimensions();
@@ -30,7 +30,9 @@ export default function AppLayout() {
       <View className="flex-1 flex-row">
         {/* TODO: add animation */}
         {sidebarOepn && (
-          <View className="max-w-80 flex-1 border-r border-border"></View>
+          <View className="max-w-80 flex-1">
+            <Sidebar />
+          </View>
         )}
         <Stack
           screenOptions={{
@@ -80,12 +82,8 @@ export default function AppLayout() {
               title={options.title}
             />
           ),
-          drawerStyle: {
-            borderRightWidth: 1,
-            borderColor: NAV_THEME.light.border,
-          },
         }}
-        drawerContent={() => <></>}
+        drawerContent={() => <Sidebar />}
       >
         <Drawer.Screen
           name="index"
