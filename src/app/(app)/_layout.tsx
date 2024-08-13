@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Redirect, Stack } from "expo-router";
@@ -13,6 +14,8 @@ export default function AppLayout() {
   const { width } = useWindowDimensions();
   const { isLoading, userData } = useSession();
 
+  const [sidebarOepn, setSidebarOpen] = useState(true);
+
   if (isLoading) {
     // TODO: maybe add a loading spinner here
     return null;
@@ -25,10 +28,26 @@ export default function AppLayout() {
   if (width >= 768) {
     return (
       <View className="flex-1 flex-row">
-        <View className="max-w-80 flex-1 border-r border-border"></View>
+        {/* TODO: add animation */}
+        {sidebarOepn && (
+          <View className="max-w-80 flex-1 border-r border-border"></View>
+        )}
         <Stack
           screenOptions={{
-            header: ({ options }) => <Header title={options.title} />,
+            header: ({ options }) => (
+              <Header
+                left={() => (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onPress={() => setSidebarOpen((v) => !v)}
+                  >
+                    <Menu className="text-foreground" size={24} />
+                  </Button>
+                )}
+                title={options.title}
+              />
+            ),
           }}
         >
           <Stack.Screen
