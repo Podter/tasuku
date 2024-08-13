@@ -1,5 +1,6 @@
+import { useWindowDimensions, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Redirect } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 
 import Header from "~/components/header";
@@ -9,6 +10,7 @@ import { useSession } from "~/hooks/use-session";
 import { NAV_THEME } from "~/lib/constants";
 
 export default function AppLayout() {
+  const { width } = useWindowDimensions();
   const { isLoading, userData } = useSession();
 
   if (isLoading) {
@@ -18,6 +20,26 @@ export default function AppLayout() {
 
   if (!userData) {
     return <Redirect href="/login" />;
+  }
+
+  if (width >= 768) {
+    return (
+      <View className="flex-1 flex-row">
+        <View className="max-w-80 flex-1 border-r border-border"></View>
+        <Stack
+          screenOptions={{
+            header: ({ options }) => <Header title={options.title} />,
+          }}
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "Home",
+            }}
+          />
+        </Stack>
+      </View>
+    );
   }
 
   return (
@@ -41,15 +63,15 @@ export default function AppLayout() {
           ),
           drawerStyle: {
             borderRightWidth: 1,
-            borderColor: NAV_THEME.dark.border,
+            borderColor: NAV_THEME.light.border,
           },
         }}
+        drawerContent={() => <></>}
       >
         <Drawer.Screen
           name="index"
           options={{
-            title: "Tasuku",
-            drawerLabel: "Home",
+            title: "Home",
           }}
         />
       </Drawer>
