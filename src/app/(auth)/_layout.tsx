@@ -7,7 +7,6 @@ import { useSession } from "~/hooks/use-session";
 
 export default function AuthLayout() {
   const { width } = useWindowDimensions();
-
   const { isLoading, userData } = useSession();
 
   if (isLoading) {
