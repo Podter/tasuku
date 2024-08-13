@@ -10,7 +10,6 @@ interface HeaderProps {
   border?: boolean;
 }
 
-// TODO: make header as a reusable component
 export default function Header({
   title,
   left: Left,

@@ -2,7 +2,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Redirect } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 
-import DrawerHeader from "~/components/drawer-header";
+import Header from "~/components/header";
+import { Menu } from "~/components/icons/menu";
+import { Button } from "~/components/ui/button";
 import { useSession } from "~/hooks/use-session";
 import { NAV_THEME } from "~/lib/constants";
 
@@ -20,10 +22,23 @@ export default function AppLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* Style drawer */}
+      {/* TODO: Style drawer */}
       <Drawer
         screenOptions={{
-          header: (props) => <DrawerHeader {...props} />,
+          header: ({ navigation, options }) => (
+            <Header
+              left={() => (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onPress={() => navigation.toggleDrawer()}
+                >
+                  <Menu className="text-foreground" size={24} />
+                </Button>
+              )}
+              title={options.title}
+            />
+          ),
           drawerStyle: {
             borderRightWidth: 1,
             borderColor: NAV_THEME.dark.border,
