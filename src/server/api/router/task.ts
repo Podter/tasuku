@@ -13,6 +13,8 @@ export const taskRouter = {
       where: ({ userId }, { eq }) => eq(userId, user.id),
       columns: {
         id: true,
+        name: true,
+        done: true,
       },
     });
     return tasks;

@@ -13,6 +13,7 @@ export const listRouter = {
       where: ({ userId }, { eq }) => eq(userId, user.id),
       columns: {
         id: true,
+        name: true,
       },
     });
     return lists;

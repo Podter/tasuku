@@ -1,7 +1,13 @@
 import { View } from "react-native";
 import { Link } from "expo-router";
 
+import type { RouterOutputs } from "~/lib/api";
 import { api } from "~/lib/api";
+import { ListTodo } from "./icons/list-todo";
+import { Plus } from "./icons/plus";
+import NewList from "./new-list";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 import { Text } from "./ui/text";
 
 export default function Sidebar() {
@@ -9,35 +15,63 @@ export default function Sidebar() {
 
   return (
     <View className="flex-1 flex-col gap-4 border-r border-border p-4">
-      <Link href="/" className="text-2xl font-bold">
-        Tasuku
-      </Link>
-      {!isFetching && data && (
-        <View className="gap-2">
-          {data.map(({ id }) => (
-            <List id={id} key={id} />
-          ))}
-        </View>
-      )}
+      <View className="h-8 flex-row items-center justify-between">
+        <Link href="/" className="text-2xl font-bold">
+          Tasuku
+        </Link>
+        <Avatar alt="Zach Nugent's Avatar" className="h-8 w-8">
+          <AvatarImage
+            source={{
+              uri: "https://api.dicebear.com/9.x/thumbs/svg",
+            }}
+          />
+          <AvatarFallback>
+            <Text>P</Text>
+          </AvatarFallback>
+        </Avatar>
+      </View>
+      <View className="gap-1">
+        <Link href="/" asChild>
+          <Button
+            className="flex-row justify-start gap-2 px-2 text-start"
+            variant="ghost"
+          >
+            <ListTodo />
+            <Text>All Tasks</Text>
+          </Button>
+        </Link>
+        <NewList>
+          <Button
+            className="flex-row justify-start gap-2 px-2 text-start"
+            variant="ghost"
+          >
+            <Plus />
+            <Text>New List</Text>
+          </Button>
+        </NewList>
+        {!isFetching &&
+          data &&
+          data.map((props) => <List {...props} key={props.id} />)}
+      </View>
     </View>
   );
 }
 
-function List({ id }: { id: string }) {
-  const { data, isFetching } = api.list.get.useQuery({ id });
-
-  if (isFetching || !data) {
-    return <Text>Loading...</Text>;
-  }
-
+function List({ id, name }: RouterOutputs["list"]["getMany"][number]) {
   return (
     <Link
       href={{
         pathname: "/list/[id]",
         params: { id },
       }}
+      asChild
     >
-      {data.name}
+      <Button
+        className="flex-row justify-start px-2 text-start"
+        variant="ghost"
+      >
+        <Text className="ml-8">{name}</Text>
+      </Button>
     </Link>
   );
 }
