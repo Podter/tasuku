@@ -27,6 +27,7 @@
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "@rn-primitives/avatar": "^1.0.3",
     "@rn-primitives/label": "^1.0.3",
     "@rn-primitives/slot": "^1.0.3",
     "@rn-primitives/types": "^1.0.3",
