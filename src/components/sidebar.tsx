@@ -8,6 +8,7 @@ import { Plus } from "./icons/plus";
 import NewList from "./new-list";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { Label } from "./ui/label";
 import { Text } from "./ui/text";
 
 export default function Sidebar() {
@@ -49,6 +50,9 @@ export default function Sidebar() {
             <Text>New List</Text>
           </Button>
         </NewList>
+      </View>
+      <View className="gap-1">
+        <Label className="mb-1 text-muted-foreground">Lists</Label>
         {!isFetching &&
           data &&
           data.map((props) => <List {...props} key={props.id} />)}
