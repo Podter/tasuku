@@ -1,9 +1,9 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
-import { z } from "zod";
 
 import { List, ListToTask, Task } from "~/server/db/schema";
+import { ListSchema } from "~/validators/list";
 import { listAccessMiddleware } from "../middlewares";
 import { protectedProcedure } from "../trpc";
 
@@ -41,7 +41,7 @@ export const listRouter = {
     }),
 
   create: protectedProcedure
-    .input(z.object({ name: z.string() }))
+    .input(ListSchema)
     .mutation(async ({ ctx: { db, user }, input }) => {
       const id = generateId(15);
       await db.insert(List).values({
@@ -54,7 +54,7 @@ export const listRouter = {
 
   update: protectedProcedure
     .unstable_concat(listAccessMiddleware)
-    .input(z.object({ name: z.string() }))
+    .input(ListSchema)
     .mutation(async ({ ctx: { db, list }, input }) => {
       await db
         .update(List)
