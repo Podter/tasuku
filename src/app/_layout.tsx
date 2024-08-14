@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
+import { PortalHost } from "@rn-primitives/portal";
 
 import { ToastProvider } from "~/components/ui/toast";
 import { useColorScheme } from "~/hooks/use-color-scheme";
@@ -88,6 +89,7 @@ export default function RootLayout() {
           />
         </Stack>
         <ToastProvider />
+        <PortalHost />
       </ThemeProvider>
     </TRPCProvider>
   );
