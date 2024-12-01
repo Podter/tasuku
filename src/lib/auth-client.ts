@@ -1,3 +1,4 @@
+import type { anonymousClient as AnonymousClient } from "better-auth/client/plugins";
 import type { createAuthClient as CreateAuthClient } from "better-auth/react";
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
@@ -17,6 +18,6 @@ export const authClient = (createAuthClient as typeof CreateAuthClient)({
       // @ts-expect-error: this is fine
       storage: Platform.OS === "web" ? AsyncStorage : SecureStore,
     }),
-    anonymousClient(),
+    (anonymousClient as typeof AnonymousClient)(),
   ],
 });
