@@ -1,12 +1,12 @@
 import type { createAuthClient as CreateAuthClient } from "better-auth/react";
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { expoClient } from "@better-auth/expo/src/client";
+import { expoClient } from "@better-auth/expo/dist/client.mjs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // @ts-expect-error: cant import from "better-auth/react" directly
 import { createAuthClient } from "better-auth/dist/react.js";
 
-export const authClient = createAuthClient({
+export const authClient = (createAuthClient as typeof CreateAuthClient)({
   baseURL: "http://localhost:8081",
   plugins: [
     expoClient({
@@ -16,4 +16,4 @@ export const authClient = createAuthClient({
       storage: Platform.OS === "web" ? AsyncStorage : SecureStore,
     }),
   ],
-} as Parameters<typeof CreateAuthClient>[0]);
+});
