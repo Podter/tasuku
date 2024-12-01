@@ -9,7 +9,7 @@ import { TamaguiProvider, useTheme } from "tamagui";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-import { tamaguiConfig } from "../lib/tamagui";
+import { tamaguiConfig } from "~/lib/tamagui";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
