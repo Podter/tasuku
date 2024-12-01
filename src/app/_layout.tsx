@@ -10,6 +10,7 @@ import {
 } from "@react-navigation/native";
 import { TamaguiProvider, useTheme } from "tamagui";
 
+import { TRPCProvider } from "~/lib/api";
 import { tamaguiConfig } from "~/lib/tamagui";
 
 SplashScreen.preventAutoHideAsync();
@@ -33,14 +34,18 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <StatusBar
-          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        />
-        <App />
-      </ThemeProvider>
-    </TamaguiProvider>
+    <TRPCProvider>
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <StatusBar
+            barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+          />
+          <App />
+        </ThemeProvider>
+      </TamaguiProvider>
+    </TRPCProvider>
   );
 }
 
