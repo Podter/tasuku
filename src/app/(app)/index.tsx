@@ -20,7 +20,7 @@ export default function Index() {
   if (!data) {
     return (
       <YStack flex={1} jc="center" ai="center">
-        <Text>Loading...</Text>
+        <Text>Data Loading...</Text>
       </YStack>
     );
   }

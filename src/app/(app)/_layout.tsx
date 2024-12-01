@@ -17,7 +17,7 @@ export default function AppLayout() {
   if (isPending) {
     return (
       <YStack flex={1} jc="center" ai="center">
-        <Text>Loading...</Text>
+        <Text>App auth Loading...</Text>
       </YStack>
     );
   }

@@ -26,7 +26,7 @@ export default function Auth() {
   if (isPending) {
     return (
       <YStack flex={1} jc="center" ai="center">
-        <Text>Loading...</Text>
+        <Text>Auth Loading...</Text>
       </YStack>
     );
   }
