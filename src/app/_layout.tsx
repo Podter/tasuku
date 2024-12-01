@@ -1,16 +1,16 @@
+import { useEffect } from "react";
+import { StatusBar, useColorScheme } from "react-native";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar, useColorScheme } from "react-native";
 import { TamaguiProvider, useTheme } from "tamagui";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 
 import { tamaguiConfig } from "~/lib/tamagui";
-import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
