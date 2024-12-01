@@ -37,3 +37,6 @@ yarn-error.*
 
 # tamagui
 .tamagui
+
+# env
+.env.local
