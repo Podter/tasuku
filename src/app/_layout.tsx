@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { StatusBar, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
 import {
   DarkTheme,
   DefaultTheme,
@@ -39,9 +41,7 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <StatusBar
-            barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-          />
+          <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
           <App />
         </ThemeProvider>
       </TamaguiProvider>
@@ -51,6 +51,11 @@ export default function RootLayout() {
 
 function App() {
   const theme = useTheme();
+
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync(theme.background.val);
+  }, [theme.background.val]);
+
   return (
     <Stack
       screenOptions={{
