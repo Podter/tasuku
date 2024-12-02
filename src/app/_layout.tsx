@@ -10,8 +10,10 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { ToastProvider, ToastViewport } from "@tamagui/toast";
 import { TamaguiProvider, useTheme } from "tamagui";
 
+import { CurrentToast } from "~/components/current-toast";
 import { TRPCProvider } from "~/lib/api";
 import { tamaguiConfig } from "~/lib/tamagui";
 
@@ -41,8 +43,12 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-          <App />
+          <ToastProvider swipeDirection="up" duration={5000}>
+            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+            <App />
+            <CurrentToast />
+            <ToastViewport top="$8" left={0} right={0} />
+          </ToastProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </TRPCProvider>
