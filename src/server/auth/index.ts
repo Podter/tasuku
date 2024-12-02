@@ -20,5 +20,14 @@ export const auth = betterAuth({
     process.env.NODE_ENV === "development" ? "exp://" : "tasuku://",
   ],
   plugins: [expo(), anonymous()],
-  socialProviders: {},
+  socialProviders: {
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    },
+    discord: {
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+    },
+  },
 });
