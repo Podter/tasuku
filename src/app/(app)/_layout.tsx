@@ -1,30 +1,11 @@
-import { Redirect, Slot } from "expo-router";
-import { Text, YStack } from "tamagui";
+import { Slot } from "expo-router";
 
-import { authClient } from "~/lib/auth-client";
+import { SessionProvider } from "~/providers/session-provider";
 
 export default function AppLayout() {
-  const { data: session, error, isPending } = authClient.useSession();
-
-  if (error !== null) {
-    return (
-      <YStack flex={1} jc="center" ai="center">
-        <Text>Error: {error.message}</Text>
-      </YStack>
-    );
-  }
-
-  if (isPending) {
-    return (
-      <YStack flex={1} jc="center" ai="center">
-        <Text>App auth Loading...</Text>
-      </YStack>
-    );
-  }
-
-  if (session === null) {
-    return <Redirect href="/auth" />;
-  }
-
-  return <Slot />;
+  return (
+    <SessionProvider>
+      <Slot />
+    </SessionProvider>
+  );
 }

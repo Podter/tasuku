@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Redirect, useRouter } from "expo-router";
-import { Button, Text, YStack } from "tamagui";
+import { Button, Spinner, Text, YStack } from "tamagui";
 
 import { authClient } from "~/lib/auth-client";
 
@@ -26,7 +26,7 @@ export default function Auth() {
   if (isPending) {
     return (
       <YStack flex={1} jc="center" ai="center">
-        <Text>Auth Loading...</Text>
+        <Spinner size="large" />
       </YStack>
     );
   }
