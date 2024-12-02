@@ -8,6 +8,7 @@ import SuperJSON from "superjson";
 
 import type { AppRouter } from "~/server/api/root";
 import { authClient } from "./auth-client";
+import { getBaseUrl } from "./base-url";
 
 export const api = createTRPCReact<AppRouter>();
 
@@ -32,7 +33,7 @@ export function TRPCProvider(props: PropsWithChildren) {
       links: [
         httpBatchLink({
           transformer: SuperJSON,
-          url: "http://localhost:8081" + "/api/trpc",
+          url: `${getBaseUrl()}/api/trpc`,
           headers: () => {
             const headers = new Map<string, string>();
             const cookies = authClient.getCookie();

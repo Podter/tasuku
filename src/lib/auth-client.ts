@@ -9,8 +9,10 @@ import { anonymousClient } from "better-auth/dist/client/plugins";
 // @ts-expect-error: cant import from "better-auth/react" directly
 import { createAuthClient } from "better-auth/dist/react";
 
+import { getBaseUrl } from "./base-url";
+
 export const authClient = (createAuthClient as typeof CreateAuthClient)({
-  baseURL: "http://localhost:8081",
+  baseURL: getBaseUrl(),
   plugins: [
     expoClient({
       scheme: "tasuku",
