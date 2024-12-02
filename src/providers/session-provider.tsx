@@ -1,7 +1,8 @@
 import type { PropsWithChildren } from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { Redirect } from "expo-router";
-import { Spinner, Text, YStack } from "tamagui";
+import { useToastController } from "@tamagui/toast";
+import { Spinner, YStack } from "tamagui";
 
 import { authClient } from "~/lib/auth-client";
 
@@ -20,15 +21,16 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
+  const toast = useToastController();
   const { data: session, error, isPending } = authClient.useSession();
 
-  if (error !== null) {
-    return (
-      <YStack flex={1} jc="center" ai="center">
-        <Text>Error: {error.message}</Text>
-      </YStack>
-    );
-  }
+  useEffect(() => {
+    if (error !== null) {
+      toast.show("An error occurred", {
+        message: error.message,
+      });
+    }
+  }, []);
 
   if (isPending) {
     return (

@@ -1,12 +1,22 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Redirect, useRouter } from "expo-router";
-import { Button, Spinner, Text, YStack } from "tamagui";
+import { useToastController } from "@tamagui/toast";
+import { Button, Spinner, YStack } from "tamagui";
 
 import { authClient } from "~/lib/auth-client";
 
 export default function Auth() {
   const router = useRouter();
+  const toast = useToastController();
   const { data: session, error, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (error !== null) {
+      toast.show("An error occurred", {
+        message: error.message,
+      });
+    }
+  }, []);
 
   const continueAnonymous = useCallback(async () => {
     const res = await authClient.signIn.anonymous();
@@ -14,14 +24,6 @@ export default function Auth() {
       router.replace("/");
     }
   }, [router]);
-
-  if (error !== null) {
-    return (
-      <YStack flex={1} jc="center" ai="center">
-        <Text>Error: {error.message}</Text>
-      </YStack>
-    );
-  }
 
   if (isPending) {
     return (
