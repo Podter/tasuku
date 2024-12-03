@@ -11,8 +11,9 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { ToastProvider, ToastViewport } from "@tamagui/toast";
-import { TamaguiProvider, useTheme } from "tamagui";
+import { Portal, TamaguiProvider, useTheme } from "tamagui";
 
+import AppHeader from "~/components/app-header";
 import { CurrentToast } from "~/components/current-toast";
 import { TRPCProvider } from "~/lib/api";
 import { tamaguiConfig } from "~/lib/tamagui";
@@ -65,11 +66,30 @@ function App() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false,
         contentStyle: {
           backgroundColor: theme.background.val,
         },
       }}
-    />
+    >
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "Tasuku",
+          header: () => <AppHeader />,
+          // headerRight: () => (
+          //   <Link href="/auth">
+          //     <UserCircle2Icon />
+          //   </Link>
+          // ),
+          // headerBackVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="auth"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
   );
 }
