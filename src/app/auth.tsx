@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Redirect, useRouter } from "expo-router";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { UserRound as UserRoundIcon } from "@tamagui/lucide-icons";
@@ -12,6 +12,10 @@ export default function Auth() {
   const toast = useToastController();
   const { data: session, error, isPending } = authClient.useSession();
 
+  const [loading, setLoading] = useState<
+    "anonymous" | "github" | "discord" | null
+  >(null);
+
   useEffect(() => {
     if (error !== null) {
       toast.show("An error occurred", {
@@ -21,24 +25,57 @@ export default function Auth() {
   }, [error, toast]);
 
   const anonymousLogin = useCallback(async () => {
-    await authClient.signIn.anonymous();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/");
-  }, [router]);
+    try {
+      setLoading("anonymous");
+      await authClient.signIn.anonymous();
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.replace("/");
+    } catch (err) {
+      console.error(err);
+      toast.show("An error occurred", {
+        message: "Failed to sign in anonymously",
+      });
+      return;
+    } finally {
+      setLoading(null);
+    }
+  }, [router, toast]);
 
   const githubLogin = useCallback(async () => {
-    await authClient.signIn.social({
-      provider: "github",
-      callbackURL: "/",
-    });
-  }, []);
+    try {
+      setLoading("github");
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.show("An error occurred", {
+        message: "Failed to sign in with GitHub",
+      });
+      return;
+    } finally {
+      setLoading(null);
+    }
+  }, [toast]);
 
   const discordLogin = useCallback(async () => {
-    await authClient.signIn.social({
-      provider: "discord",
-      callbackURL: "/",
-    });
-  }, []);
+    try {
+      setLoading("discord");
+      await authClient.signIn.social({
+        provider: "discord",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.show("An error occurred", {
+        message: "Failed to sign in with Discord",
+      });
+      return;
+    } finally {
+      setLoading(null);
+    }
+  }, [toast]);
 
   if (isPending) {
     return (
@@ -61,13 +98,30 @@ export default function Auth() {
         </Paragraph>
       </YStack>
       <YStack gap="$2">
-        <Button onPress={anonymousLogin} icon={<UserRoundIcon />}>
+        <Button
+          onPress={anonymousLogin}
+          icon={loading === "anonymous" ? <Spinner /> : <UserRoundIcon />}
+        >
           Continue anonymously
         </Button>
-        <Button onPress={githubLogin} icon={<FontAwesome6 name="github" />}>
+        <Button
+          onPress={githubLogin}
+          icon={
+            loading === "github" ? <Spinner /> : <FontAwesome6 name="github" />
+          }
+        >
           Continue with GitHub
         </Button>
-        <Button onPress={discordLogin} icon={<FontAwesome6 name="discord" />}>
+        <Button
+          onPress={discordLogin}
+          icon={
+            loading === "discord" ? (
+              <Spinner />
+            ) : (
+              <FontAwesome6 name="discord" />
+            )
+          }
+        >
           Continue with Discord
         </Button>
       </YStack>
