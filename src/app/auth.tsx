@@ -1,7 +1,9 @@
 import { useCallback, useEffect } from "react";
 import { Redirect, useRouter } from "expo-router";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { UserRound as UserRoundIcon } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
-import { Button, Spinner, YStack } from "tamagui";
+import { Button, H1, Paragraph, Spinner, YStack } from "tamagui";
 
 import { authClient } from "~/lib/auth-client";
 
@@ -51,10 +53,30 @@ export default function Auth() {
   }
 
   return (
-    <YStack flex={1} jc="center" ai="center" gap="$2">
-      <Button onPress={anonymousLogin}>Continue without signing in</Button>
-      <Button onPress={githubLogin}>Continue with GitHub</Button>
-      <Button onPress={discordLogin}>Continue with Discord</Button>
+    <YStack flex={1} jc="center" ai="center" gap="$4">
+      <YStack gap="$2" ai="center" px="$6">
+        <H1 textAlign="center">Tasuku</H1>
+        <Paragraph textAlign="center">
+          A simple todo app that helps you focus on one task at a time.
+        </Paragraph>
+      </YStack>
+      <YStack gap="$2">
+        <Button onPress={anonymousLogin} icon={<UserRoundIcon />}>
+          Continue anonymously
+        </Button>
+        <Button onPress={githubLogin} icon={<FontAwesome6 name="github" />}>
+          Continue with GitHub
+        </Button>
+        <Button onPress={discordLogin} icon={<FontAwesome6 name="discord" />}>
+          Continue with Discord
+        </Button>
+      </YStack>
+      {session?.user.isAnonymous && (
+        <Paragraph textAlign="center" px="$8" opacity={0.5}>
+          All data will be deleted once you sign in with a social account.
+        </Paragraph>
+      )}
+      <YStack h="$4.5" />
     </YStack>
   );
 }
