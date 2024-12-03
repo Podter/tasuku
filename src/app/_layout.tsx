@@ -11,7 +11,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { ToastProvider, ToastViewport } from "@tamagui/toast";
-import { Portal, PortalProvider, TamaguiProvider, useTheme } from "tamagui";
+import { PortalProvider, TamaguiProvider, useTheme } from "tamagui";
 
 import AppHeader from "~/components/app-header";
 import { CurrentToast } from "~/components/current-toast";
