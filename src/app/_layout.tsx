@@ -14,6 +14,7 @@ import { ToastProvider, ToastViewport } from "@tamagui/toast";
 import { PortalProvider, TamaguiProvider, useTheme } from "tamagui";
 
 import AppHeader from "~/components/app-header";
+import AuthHeader from "~/components/auth-header";
 import { CurrentToast } from "~/components/current-toast";
 import { TRPCProvider } from "~/lib/api";
 import { tamaguiConfig } from "~/lib/tamagui";
@@ -78,18 +79,13 @@ function App() {
         options={{
           title: "Tasuku",
           header: () => <AppHeader />,
-          // headerRight: () => (
-          //   <Link href="/auth">
-          //     <UserCircle2Icon />
-          //   </Link>
-          // ),
-          // headerBackVisible: false,
         }}
       />
       <Stack.Screen
         name="auth"
         options={{
-          headerShown: false,
+          title: "Sign in",
+          header: () => <AuthHeader />,
         }}
       />
     </Stack>
