@@ -129,15 +129,7 @@ function Content({ closeDialog }: WithCloseDialog) {
 function Trigger() {
   return (
     <Dialog.Trigger asChild>
-      <Button
-        pos="absolute"
-        b="$3.5"
-        r="$3.5"
-        circular
-        p="$0"
-        w="$4.5"
-        h="$4.5"
-      >
+      <Button pos="absolute" b="$3.5" r="$3.5" p="$0" w="$5" h="$5" br={9999}>
         <PlusIcon />
       </Button>
     </Dialog.Trigger>
