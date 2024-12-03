@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 
@@ -13,7 +13,8 @@ export const taskRouter = createTRPCRouter({
         id: Task.id,
       })
       .from(Task)
-      .where(eq(Task.userId, session.user.id));
+      .where(eq(Task.userId, session.user.id))
+      .orderBy(desc(Task.createdAt));
     return {
       ids: tasks.map((task) => task.id),
     };
