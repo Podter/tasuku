@@ -37,7 +37,7 @@ export const taskRouter = createTRPCRouter({
     }),
 
   create: protectedProcedure
-    .input(z.object({ title: z.string() }))
+    .input(z.object({ title: z.string().min(1) }))
     .mutation(async ({ input, ctx: { session, db } }) => {
       const id = nanoid();
       await db.insert(Task).values({
