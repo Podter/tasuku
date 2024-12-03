@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { Platform } from "react-native";
-import { isLoading } from "expo-font";
 import { useRefresh } from "@react-native-community/hooks";
 import { FlashList } from "@shopify/flash-list";
 import { Spinner, Stack } from "tamagui";
