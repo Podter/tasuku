@@ -20,6 +20,7 @@ export default function Auth() {
 
   const anonymousLogin = useCallback(async () => {
     await authClient.signIn.anonymous();
+    await new Promise((resolve) => setTimeout(resolve, 500));
     router.replace("/");
   }, [router]);
 
