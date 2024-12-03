@@ -11,7 +11,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { ToastProvider, ToastViewport } from "@tamagui/toast";
-import { Portal, TamaguiProvider, useTheme } from "tamagui";
+import { Portal, PortalProvider, TamaguiProvider, useTheme } from "tamagui";
 
 import AppHeader from "~/components/app-header";
 import { CurrentToast } from "~/components/current-toast";
@@ -44,12 +44,14 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <ToastProvider swipeDirection="up" duration={5000}>
-            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-            <App />
-            <CurrentToast />
-            <ToastViewport top="$8" left={0} right={0} />
-          </ToastProvider>
+          <PortalProvider shouldAddRootHost>
+            <ToastProvider swipeDirection="up" duration={5000}>
+              <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+              <App />
+              <CurrentToast />
+              <ToastViewport top="$8" left={0} right={0} />
+            </ToastProvider>
+          </PortalProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </TRPCProvider>
