@@ -16,7 +16,7 @@ export default function Auth() {
         message: error.message,
       });
     }
-  }, []);
+  }, [error, toast]);
 
   const anonymousLogin = useCallback(async () => {
     await authClient.signIn.anonymous();

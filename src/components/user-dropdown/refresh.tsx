@@ -11,7 +11,7 @@ export default function Refresh({ closeDropdown }: WithCloseDropdown) {
   const refetch = useCallback(() => {
     utils.task.getIds.refetch();
     closeDropdown();
-  }, []);
+  }, [closeDropdown, utils.task.getIds]);
 
   return (
     <YGroup.Item>

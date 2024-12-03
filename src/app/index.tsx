@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { Button, Portal, Spinner, Stack } from "tamagui";
+import { Spinner, Stack } from "tamagui";
 
 import NewTask from "~/components/new-task";
 import TodoItem from "~/components/todo-item";

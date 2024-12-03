@@ -30,7 +30,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         message: error.message,
       });
     }
-  }, []);
+  }, [error, toast]);
 
   if (isPending) {
     return (
