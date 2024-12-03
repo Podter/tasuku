@@ -1,4 +1,7 @@
+import { useCallback } from "react";
 import { Platform } from "react-native";
+import { isLoading } from "expo-font";
+import { useRefresh } from "@react-native-community/hooks";
 import { FlashList } from "@shopify/flash-list";
 import { Spinner, Stack } from "tamagui";
 
@@ -16,9 +19,17 @@ export default function Index() {
 }
 
 function App() {
-  const { data, isFetching, refetch } = api.task.getIds.useQuery();
+  const utils = api.useUtils();
+  const { data, isLoading } = api.task.getIds.useQuery();
 
-  if (Platform.OS === "web" && isFetching && !data) {
+  const invalidate = useCallback(async () => {
+    await utils.task.getIds.invalidate();
+    await utils.task.getOne.invalidate();
+  }, [utils.task.getIds, utils.task.getOne]);
+
+  const { isRefreshing, onRefresh } = useRefresh(invalidate);
+
+  if (Platform.OS === "web" && isLoading) {
     return (
       <Stack flex={1} jc="center" ai="center">
         <Spinner size="large" />
@@ -32,8 +43,8 @@ function App() {
         data={data?.ids ?? []}
         estimatedItemSize={48}
         renderItem={({ item }) => <TodoItem id={item} />}
-        onRefresh={() => refetch()}
-        refreshing={isFetching}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing || isLoading}
       />
       <NewTask />
     </>

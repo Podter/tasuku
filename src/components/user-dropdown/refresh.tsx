@@ -8,10 +8,15 @@ import { api } from "~/lib/api";
 export default function Refresh({ closeDropdown }: WithCloseDropdown) {
   const utils = api.useUtils();
 
+  const invalidate = useCallback(async () => {
+    await utils.task.getIds.invalidate();
+    await utils.task.getOne.invalidate();
+  }, [utils.task.getIds, utils.task.getOne]);
+
   const refetch = useCallback(() => {
-    utils.task.getIds.refetch();
+    invalidate();
     closeDropdown();
-  }, [closeDropdown, utils.task.getIds]);
+  }, [closeDropdown, invalidate]);
 
   return (
     <YGroup.Item>
