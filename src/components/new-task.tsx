@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useKeyboard } from "@react-native-community/hooks";
 import { Plus as PlusIcon } from "@tamagui/lucide-icons";
 import {
@@ -39,7 +39,7 @@ function Content({ closeDialog }: WithCloseDialog) {
   const { keyboardHeight, keyboardShown } = useKeyboard();
   const utils = api.useUtils();
 
-  const [name, setName] = useState("");
+  const nameRef = useRef("");
   const { mutate, isPending } = api.task.create.useMutation({
     onSuccess: () => {
       utils.task.invalidate();
@@ -64,11 +64,9 @@ function Content({ closeDialog }: WithCloseDialog) {
         animation="quicker"
         enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
         exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-        gap="$4"
         width={384}
-        asChild
       >
-        <Form onSubmit={() => mutate({ title: name })}>
+        <Form onSubmit={() => mutate({ title: nameRef.current })} gap="$4">
           <YStack>
             <Dialog.Title fontSize="$8">New task</Dialog.Title>
             <Dialog.Description>
@@ -79,8 +77,7 @@ function Content({ closeDialog }: WithCloseDialog) {
           <Input
             id="name"
             placeholder="Name"
-            value={name}
-            onChangeText={setName}
+            onChangeText={(v) => (nameRef.current = v)}
             disabled={isPending}
           />
 
