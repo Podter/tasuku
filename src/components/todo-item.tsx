@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Check as CheckIcon } from "@tamagui/lucide-icons";
 import { Checkbox, ListItem } from "tamagui";
 
-export default function TodoItem() {
+interface TodoItemProps {
+  id: string;
+}
+
+export default function TodoItem({ id }: TodoItemProps) {
   const [done, setDone] = useState(false);
 
   return (
