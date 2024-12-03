@@ -1,7 +1,8 @@
 import { Platform } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { Spinner, Stack } from "tamagui";
+import { Button, Portal, Spinner, Stack } from "tamagui";
 
+import NewTask from "~/components/new-task";
 import TodoItem from "~/components/todo-item";
 import { api } from "~/lib/api";
 import { SessionProvider } from "~/providers/session-provider";
@@ -26,12 +27,15 @@ function App() {
   }
 
   return (
-    <FlashList
-      data={data?.ids ?? []}
-      estimatedItemSize={48}
-      renderItem={({ item }) => <TodoItem id={item} />}
-      onRefresh={() => refetch()}
-      refreshing={isFetching}
-    />
+    <>
+      <FlashList
+        data={data?.ids ?? []}
+        estimatedItemSize={48}
+        renderItem={({ item }) => <TodoItem id={item} />}
+        onRefresh={() => refetch()}
+        refreshing={isFetching}
+      />
+      <NewTask />
+    </>
   );
 }
