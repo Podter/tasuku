@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Keyboard, useWindowDimensions } from "react-native";
+import { Keyboard } from "react-native";
 import { useKeyboard } from "@react-native-community/hooks";
 import { Plus as PlusIcon } from "@tamagui/lucide-icons";
+import { useToastController } from "@tamagui/toast";
 import {
   Adapt,
   Button,
@@ -46,12 +47,17 @@ export default function NewTask() {
 }
 
 function Content({ closeDialog }: WithCloseDialog) {
-  const { height } = useWindowDimensions();
+  const toast = useToastController();
   const { keyboardHeight } = useKeyboard();
   const utils = api.useUtils();
 
   const nameRef = useRef("");
   const { mutate, isPending } = api.task.create.useMutation({
+    onError: (err) => {
+      toast.show("An error occurred", {
+        message: err.message,
+      });
+    },
     onSuccess: () => {
       utils.task.invalidate();
       closeDialog();

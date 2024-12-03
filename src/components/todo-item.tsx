@@ -1,4 +1,5 @@
 import { Check as CheckIcon } from "@tamagui/lucide-icons";
+import { useToastController } from "@tamagui/toast";
 import { Checkbox, ListItem, Spinner, Square } from "tamagui";
 
 import { api } from "~/lib/api";
@@ -8,6 +9,7 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ id }: TodoItemProps) {
+  const toast = useToastController();
   const utils = api.useUtils();
   const { data, isLoading } = api.task.getOne.useQuery({ id });
 
@@ -20,10 +22,13 @@ export default function TodoItem({ id }: TodoItemProps) {
         return { previousData };
       }
     },
-    onError: (_err, _newData, context) => {
+    onError: (err, _newData, context) => {
       if (context?.previousData) {
         utils.task.getOne.setData({ id }, context.previousData);
       }
+      toast.show("An error occurred", {
+        message: err.message,
+      });
     },
     onSettled: () => {
       utils.task.getOne.invalidate({ id });
