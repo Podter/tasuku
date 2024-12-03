@@ -54,3 +54,17 @@ export const Verification = pgTable("verification", {
   createdAt: timestamp(),
   updatedAt: timestamp(),
 });
+
+/**
+ * Task schema
+ */
+
+export const Task = pgTable("task", {
+  id: text().primaryKey(),
+  userId: text()
+    .notNull()
+    .references(() => User.id),
+  title: text().notNull(),
+  done: boolean().notNull(),
+  createdAt: timestamp().notNull(),
+});
