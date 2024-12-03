@@ -83,13 +83,18 @@ function Content({ closeDialog }: WithCloseDialog) {
 
           <XStack alignSelf="flex-end" gap="$4">
             <Dialog.Close displayWhenAdapted asChild>
-              <Button aria-label="Cancel">Cancel</Button>
+              {/* @ts-expect-error: for the web */}
+              <Button aria-label="Cancel" type="button">
+                Cancel
+              </Button>
             </Dialog.Close>
             <Form.Trigger asChild disabled={isPending}>
               <Button
                 theme="active"
                 aria-label="Create"
                 icon={isPending ? <Spinner /> : undefined}
+                // @ts-expect-error: for the web
+                type="submit"
               >
                 Create
               </Button>
