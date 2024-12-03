@@ -1,4 +1,5 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Keyboard, useWindowDimensions } from "react-native";
 import { useKeyboard } from "@react-native-community/hooks";
 import { Plus as PlusIcon } from "@tamagui/lucide-icons";
 import {
@@ -26,6 +27,15 @@ export default function NewTask() {
     setOpen(false);
   }, []);
 
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () =>
+      setOpen(false),
+    );
+    return () => {
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>
       <Trigger />
@@ -36,7 +46,8 @@ export default function NewTask() {
 }
 
 function Content({ closeDialog }: WithCloseDialog) {
-  const { keyboardHeight, keyboardShown } = useKeyboard();
+  const { height } = useWindowDimensions();
+  const { keyboardHeight } = useKeyboard();
   const utils = api.useUtils();
 
   const nameRef = useRef("");
@@ -48,7 +59,7 @@ function Content({ closeDialog }: WithCloseDialog) {
   });
 
   return (
-    <Dialog.Portal paddingBottom={keyboardShown ? keyboardHeight : 0}>
+    <Dialog.Portal>
       <Dialog.Overlay
         key="overlay"
         animation="slow"
@@ -64,6 +75,7 @@ function Content({ closeDialog }: WithCloseDialog) {
         animation="quicker"
         enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
         exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+        y={-keyboardHeight / 2}
         width={384}
       >
         <Form onSubmit={() => mutate({ title: nameRef.current })} gap="$4">
@@ -78,7 +90,9 @@ function Content({ closeDialog }: WithCloseDialog) {
             id="name"
             placeholder="Name"
             onChangeText={(v) => (nameRef.current = v)}
-            disabled={isPending}
+            onSubmitEditing={() => mutate({ title: nameRef.current })}
+            submitBehavior="submit"
+            autoFocus
           />
 
           <XStack alignSelf="flex-end" gap="$4">
@@ -128,7 +142,7 @@ function NewTaskSheet() {
   return (
     <Adapt when="sm" platform="touch">
       <Sheet
-        animation="quicker"
+        animation="quickest"
         modal
         dismissOnSnapToBottom
         snapPointsMode="fit"
