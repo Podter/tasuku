@@ -19,6 +19,7 @@ export default function AuthHeader() {
           pressStyle={{ opacity: 0.25 }}
           cur="pointer"
           onPress={() => router.back()}
+          role="button"
         >
           <ArrowLeftIcon />
         </Stack>
