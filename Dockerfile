@@ -1,5 +1,5 @@
 # Build
-FROM node:22-alpine AS build
+FROM node:22-slim AS build
 WORKDIR /build
 RUN --mount=type=cache,target=/root/.npm \
     npm install -g bun@latest
@@ -16,5 +16,5 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV PORT 3000
 EXPOSE ${PORT}
-COPY --from=build /app/dist/ .
+COPY --from=build /build/dist/ .
 CMD ["entry.cjs"]
