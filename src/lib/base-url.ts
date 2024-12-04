@@ -1,6 +1,8 @@
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 
+const APP_URL = "https://tasuku.podter.hackclub.app";
+
 export function getBaseUrl() {
   if (Platform.OS === "web" && Constants.debugMode) {
     return "http://localhost:8081";
@@ -10,10 +12,7 @@ export function getBaseUrl() {
   const localhost = debuggerHost?.split(":")[0];
 
   if (!localhost) {
-    // return "https://tasuku.app";
-    throw new Error(
-      "Failed to get localhost. Please point to your production server.",
-    );
+    return APP_URL;
   }
 
   return `http://${localhost}:8081`;
