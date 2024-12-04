@@ -1,7 +1,7 @@
 # Tasuku
 
 Tasuku is a simple todo app that helps you focus on one task at a time.
-Built entirely with Expo, React Native, TypeScript, tRPC, better-auth, and Tamagui.
+Built entirely with Expo, Tamagui, tRPC, better-auth, and Drizzle ORM.
 
 The API is built Expo Router using [API Routes](https://docs.expo.dev/router/reference/api-routes).
 
