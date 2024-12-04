@@ -1,3 +1,5 @@
+import "~/styles/scrollbar.css";
+
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
