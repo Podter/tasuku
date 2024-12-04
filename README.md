@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# Tasuku
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Tasuku is a simple todo app that helps you focus on one task at a time.
+Built entirely with Expo, React Native, TypeScript, tRPC, better-auth, and Tamagui.
+
+The API is built Expo Router using [API Routes](https://docs.expo.dev/router/reference/api-routes).
+
+> [!NOTE]
+> If you're looking for real self-hosted todo app, check out [Vikunja](https://vikunja.io/) instead.
+> This project is just an experiment to see what I can do with Expo Router API Routes feature.
 
 ## Get started
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install dependencies:
 
 ```bash
-npm run reset-project
+bun install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Start the app:
 
-## Learn more
+```bash
+bun start
+# or
+bun web
+# or
+bun android
+# or
+bun ios
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Hosting
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Change the `APP_URL` in `src/lib/base-url.ts` to your own URL.
+[Build](#building) the application and run the server with Node.js:
 
-## Join the community
+```bash
+node dist/entry.cjs
+```
 
-Join our community of developers creating universal apps.
+Check out `.env` file for environment variables. Also accepts `PORT` environment variable.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Building
+
+```bash
+bun run build
+```
+
+This will build the app both for frontend and backend. The output will be in the `dist` directory.
+
+This also builds Express server (`entry.cjs`) for easier deployment on any VPS.
+
+If you want to host it somewhere else, you can check out the
+[Expo documentation](https://docs.expo.dev/router/reference/api-routes/#deployment) on how to deploy it.
