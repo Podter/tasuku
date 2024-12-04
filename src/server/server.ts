@@ -2,28 +2,22 @@ import path from "path";
 import { createRequestHandler } from "@expo/server/adapter/express";
 import compression from "compression";
 import dotenv from "dotenv";
-import { pushSchema } from "drizzle-kit/api";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 import express from "express";
 import morgan from "morgan";
 
 import { db } from "./db";
-import * as schema from "./db/schema";
 
 const CLIENT_BUILD_DIR = path.join(__dirname, "client");
 const SERVER_BUILD_DIR = path.join(__dirname, "server");
+const DB_MIGRATIONS_DIR = path.join(__dirname, "drizzle");
 
 dotenv.config();
 
 process.env.NODE_ENV = "production";
 
 (async () => {
-  // @ts-expect-error: it's postgres db
-  const { hasDataLoss, apply } = await pushSchema(schema, db);
-  if (hasDataLoss) {
-    console.warn("Database migration ignored due to data loss");
-  }
-  await apply();
-  console.log("Database migration applied");
+  await migrate(db, { migrationsFolder: DB_MIGRATIONS_DIR });
 
   const app = express();
 
