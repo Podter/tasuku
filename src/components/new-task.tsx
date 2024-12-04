@@ -59,6 +59,7 @@ function Content({ closeDialog }: WithCloseDialog) {
       });
     },
     onSuccess: () => {
+      nameRef.current = "";
       utils.task.invalidate();
       closeDialog();
     },
