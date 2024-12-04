@@ -90,7 +90,12 @@ function App() {
         name="auth"
         options={{
           title: "Sign in",
-          header: () => <AuthHeader />,
+          header: ({ navigation }) => (
+            <AuthHeader
+              canGoBack={navigation.canGoBack}
+              goBack={navigation.goBack}
+            />
+          ),
         }}
       />
     </Stack>

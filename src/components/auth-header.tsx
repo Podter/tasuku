@@ -1,15 +1,17 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 import { ArrowLeft as ArrowLeftIcon } from "@tamagui/lucide-icons";
 import { Stack, XStack } from "tamagui";
 
-export default function AuthHeader() {
-  const insets = useSafeAreaInsets();
-  const router = useRouter();
+interface AuthHeaderProps {
+  canGoBack: () => boolean;
+  goBack: () => void;
+}
 
+export default function AuthHeader({ canGoBack, goBack }: AuthHeaderProps) {
+  const insets = useSafeAreaInsets();
   return (
     <XStack bg="$background" h="$6" mt={insets.top} px="$3" ai="center">
-      {router.canGoBack() && (
+      {canGoBack() && (
         <Stack
           w="$4.5"
           h="$4.5"
@@ -18,7 +20,7 @@ export default function AuthHeader() {
           ml="$-3"
           pressStyle={{ opacity: 0.25 }}
           cur="pointer"
-          onPress={() => router.back()}
+          onPress={() => goBack()}
           role="button"
         >
           <ArrowLeftIcon />
