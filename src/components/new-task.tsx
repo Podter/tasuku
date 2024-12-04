@@ -16,12 +16,15 @@ import {
 } from "tamagui";
 
 import { api } from "~/lib/api";
+import { useDeleteMode } from "~/providers/delete-mode-provider";
 
 interface WithCloseDialog {
   closeDialog: () => void;
 }
 
 export default function NewTask() {
+  const { deleteMode } = useDeleteMode();
+
   const [open, setOpen] = useState(false);
 
   const closeDialog = useCallback(() => {
@@ -36,6 +39,10 @@ export default function NewTask() {
       hideSubscription.remove();
     };
   }, []);
+
+  if (deleteMode) {
+    return null;
+  }
 
   return (
     <Dialog modal open={open} onOpenChange={setOpen}>

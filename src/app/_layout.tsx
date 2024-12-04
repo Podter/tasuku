@@ -20,6 +20,7 @@ import AuthHeader from "~/components/auth-header";
 import { CurrentToast } from "~/components/current-toast";
 import { TRPCProvider } from "~/lib/api";
 import { tamaguiConfig } from "~/lib/tamagui";
+import { DeleteModeProvider } from "~/providers/delete-mode-provider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,14 +48,16 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <PortalProvider shouldAddRootHost>
-            <ToastProvider swipeDirection="up" duration={5000}>
-              <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-              <App />
-              <CurrentToast />
-              <ToastViewport top="$8" left={0} right={0} />
-            </ToastProvider>
-          </PortalProvider>
+          <DeleteModeProvider>
+            <PortalProvider shouldAddRootHost>
+              <ToastProvider swipeDirection="up" duration={5000}>
+                <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+                <App />
+                <CurrentToast />
+                <ToastViewport top="$8" left={0} right={0} />
+              </ToastProvider>
+            </PortalProvider>
+          </DeleteModeProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </TRPCProvider>

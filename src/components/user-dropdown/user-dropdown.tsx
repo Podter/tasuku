@@ -3,6 +3,7 @@ import { UserCircle2 as UserCircle2Icon } from "@tamagui/lucide-icons";
 import { Popover, Separator, YGroup } from "tamagui";
 
 import Auth from "./auth";
+import DeleteMode from "./delete-mode";
 import Refresh from "./refresh";
 
 export interface WithCloseDropdown {
@@ -37,6 +38,8 @@ function Content({ closeDropdown }: WithCloseDropdown) {
       animation="quickest"
     >
       <YGroup width={240}>
+        <DeleteMode closeDropdown={closeDropdown} />
+        <Separator />
         <Refresh closeDropdown={closeDropdown} />
         <Separator />
         <Auth closeDropdown={closeDropdown} />
