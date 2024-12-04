@@ -1,0 +1,12 @@
+node_modules
+.git
+
+.env
+.env*.local
+
+.tamagui
+
+.expo/
+dist/
+web-build/
+expo-env.d.ts
