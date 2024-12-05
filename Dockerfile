@@ -8,7 +8,8 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.bun/install/cache \
     bun install --frozen-lockfile
 COPY . .
-RUN bun run build
+ARG EXPO_PUBLIC_APP_URL="https://tasuku.podter.hackclub.app"
+RUN EXPO_PUBLIC_APP_URL=${EXPO_PUBLIC_APP_URL} bun run build
 
 # Final
 FROM gcr.io/distroless/nodejs22 AS final

@@ -21,34 +21,34 @@ Start the app:
 
 ```bash
 bun start
-# or
-bun web
-# or
+```
+
+This will start the Expo development server. You can run the app on your device by scanning the QR code
+using the Expo Go app. Open `http://localhost:8081` in your browser to see the web version.
+
+## Run on Android or iOS
+
+There is no APK or IPA file available for download. But you can run it on your device by following [Get started](#get-started) section.
+
+If you want to run on an emulator, you can run:
+
+```bash
 bun android
 # or
 bun ios
 ```
 
-## Hosting
+You can change the `EXPO_PUBLIC_APP_URL` in `.env` file if you want to run the app on a different API server.
+Use `http://localhost:8081` for local development.
 
-Change the `APP_URL` in `src/lib/base-url.ts` to your own URL.
-[Build](#building) the application and run the server with Node.js:
+## Self-hosting
 
-```bash
-node dist/entry.cjs
-```
-
-Check out `.env` file for environment variables. Also accepts `PORT` environment variable.
-
-## Building
+Just simply copy `compose.yml` in this repo to your server and run:
 
 ```bash
-bun run build
+docker compose up -d
 ```
 
-This will build the app both for frontend and backend. The output will be in the `dist` directory.
+This will start the app server and PostgreSQL database. You can access the app on `http://localhost:3000`.
 
-This also builds Express server (`entry.cjs`) for easier deployment on any VPS.
-
-If you want to host it somewhere else, you can check out the
-[Expo documentation](https://docs.expo.dev/router/reference/api-routes/#deployment) on how to deploy it.
+Feel free to modify the `compose.yml` file to suit your needs.
