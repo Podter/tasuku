@@ -17,10 +17,7 @@ export const auth = betterAuth({
       verification: schema.Verification,
     },
   }),
-  trustedOrigins: [
-    process.env.NODE_ENV === "development" ? "exp://" : "tasuku://",
-    getBaseUrl(),
-  ],
+  trustedOrigins: ["exp://", "tasuku://", getBaseUrl()],
   plugins: [
     expo(),
     anonymous({
