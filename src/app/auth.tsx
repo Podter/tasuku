@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Redirect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { UserRound as UserRoundIcon } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 import { Button, H1, Paragraph, Spinner, YStack } from "tamagui";
 
+import Redirect from "~/components/redirect";
 import { authClient } from "~/lib/auth-client";
 
 export default function Auth() {
@@ -86,7 +87,7 @@ export default function Auth() {
   }
 
   if (session !== null && !session.user.isAnonymous) {
-    return <Redirect href="/" />;
+    return <Redirect to="/" />;
   }
 
   return (
