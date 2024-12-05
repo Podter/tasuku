@@ -1,5 +1,7 @@
 # Tasuku
 
+![Tasuku app](assets/docs/app-ui.png)
+
 Tasuku is a simple todo app that helps you focus on one task at a time.
 Built entirely with Expo, Tamagui, tRPC, better-auth, and Drizzle ORM.
 

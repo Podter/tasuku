@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import Head from "expo-router/head";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
@@ -72,32 +73,41 @@ function App() {
   }, [theme.background.val]);
 
   return (
-    <Stack
-      screenOptions={{
-        contentStyle: {
-          backgroundColor: theme.background.val,
-        },
-      }}
-    >
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Tasuku",
-          header: () => <AppHeader />,
+    <>
+      <Head>
+        <title>Tasuku</title>
+        <meta
+          name="description"
+          content="A simple todo list app. Built with Expo, Tamagui, tRPC, better-auth, and Drizzle ORM."
+        />
+      </Head>
+      <Stack
+        screenOptions={{
+          contentStyle: {
+            backgroundColor: theme.background.val,
+          },
         }}
-      />
-      <Stack.Screen
-        name="auth"
-        options={{
-          title: "Sign in",
-          header: ({ navigation }) => (
-            <AuthHeader
-              canGoBack={navigation.canGoBack}
-              goBack={navigation.goBack}
-            />
-          ),
-        }}
-      />
-    </Stack>
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Tasuku",
+            header: () => <AppHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="auth"
+          options={{
+            title: "Sign in",
+            header: ({ navigation }) => (
+              <AuthHeader
+                canGoBack={navigation.canGoBack}
+                goBack={navigation.goBack}
+              />
+            ),
+          }}
+        />
+      </Stack>
+    </>
   );
 }
